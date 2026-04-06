@@ -19,14 +19,6 @@ export default function KanbanSidebar({ onOpenSettings, onOpenAddTask, onOpenBra
         <div className="kanban-nav__item" onClick={onOpenBrainDump} style={{ cursor: 'pointer' }}>
           <span className="kanban-nav__icon">🧠</span> Brain Dump
         </div>
-
-        <div className="kanban-nav__section-label">Documentation</div>
-        <div className="kanban-nav__item">
-          <span className="kanban-nav__icon">📖</span> Help
-        </div>
-        <div className="kanban-nav__item">
-          <span className="kanban-nav__icon">⌨️</span> Shortcuts
-        </div>
       </nav>
 
       <div className="kanban-sidebar-footer">
