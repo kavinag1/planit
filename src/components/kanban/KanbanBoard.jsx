@@ -1,7 +1,10 @@
 import KanbanColumn from './KanbanColumn'
+import FullCalendar from './FullCalendar'
 import { useState } from 'react'
 
 export default function KanbanBoard({ tasksByStatus, onUpdateTask, onDeleteTask, onEditTask, onAddTasks }) {
+  const [isCalendarOpen, setIsCalendarOpen] = useState(false)
+  const allTasks = Object.values(tasksByStatus).flat()
   const columns = [
     { key: 'todo', label: '📝 To Do', emoji: 'todo' },
     { key: 'in-progress', label: '✏️ In Progress', emoji: 'doing' },
@@ -26,6 +29,8 @@ export default function KanbanBoard({ tasksByStatus, onUpdateTask, onDeleteTask,
         </div>
         <div className="kanban-view-toggle">
           <button className="kanban-view-btn on">Board</button>
+          <button className="kanban-view-btn">List</button>
+          <button className="kanban-view-btn" onClick={() => setIsCalendarOpen(true)}>Calendar</button>
         </div>
       </div>
 
@@ -44,6 +49,13 @@ export default function KanbanBoard({ tasksByStatus, onUpdateTask, onDeleteTask,
           />
         ))}
       </div>
+
+      {isCalendarOpen && (
+        <FullCalendar
+          tasks={allTasks}
+          onClose={() => setIsCalendarOpen(false)}
+        />
+      )}
     </div>
   )
 }
