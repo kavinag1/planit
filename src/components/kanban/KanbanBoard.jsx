@@ -29,7 +29,6 @@ export default function KanbanBoard({ tasksByStatus, onUpdateTask, onDeleteTask,
         </div>
         <div className="kanban-view-toggle">
           <button className="kanban-view-btn on">Board</button>
-          <button className="kanban-view-btn">List</button>
           <button className="kanban-view-btn" onClick={() => setIsCalendarOpen(true)}>Calendar</button>
         </div>
       </div>
