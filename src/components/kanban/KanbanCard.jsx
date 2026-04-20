@@ -166,7 +166,7 @@ export default function KanbanCard({ task, onUpdate, onDelete, onEdit, onAddTask
                 </div>
                 {subtask.deadline && (
                   <div style={{ fontSize: '10px', color: subtask.status === 'done' ? 'rgba(76, 175, 80, 0.75)' : 'rgba(52, 211, 153, 0.75)', marginTop: '1px' }}>
-                    📅 {subtask.deadline}
+                    {subtask.deadline}
                   </div>
                 )}
               </div>
@@ -198,7 +198,7 @@ export default function KanbanCard({ task, onUpdate, onDelete, onEdit, onAddTask
       <div className="kanban-sticky-footer">
         {task.deadline && (
           <div className={`kanban-sticky-due ${isOverdue ? 'overdue' : ''}`}>
-            📅 {formattedDate} {isOverdue ? '⚠' : ''}
+            {formattedDate} {isOverdue ? '!' : ''}
           </div>
         )}
         {task.assignee && (

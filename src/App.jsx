@@ -7,27 +7,32 @@ import './styles/global-new.css'
 
 function App() {
   const [tasks, setTasks] = useState([])
+  const [activeScreen, setActiveScreen] = useState(() => {
+    return window.localStorage.getItem('planit-active-screen') || 'board'
+  })
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [userEmail, setUserEmail] = useState(null)
   const [isLoggingIn, setIsLoggingIn] = useState(false)
-  const [isInitializing, setIsInitializing] = useState(true)
 
   // Initialize app - load tasks and check auth
   useEffect(() => {
     async function initializeApp() {
       try {
-        await initAnalytics()
-        const currentUser = await getCurrentUser()
+        // Do not block first paint on analytics setup.
+        initAnalytics().catch((error) => {
+          console.error('Analytics initialization failed:', error)
+        })
+
+        const [currentUser, loadedTasks] = await Promise.all([getCurrentUser(), loadTasks()])
+
         if (currentUser) {
           setIsLoggedIn(true)
           setUserEmail(currentUser.email)
         }
-        const loaded = await loadTasks()
-        setTasks(Array.isArray(loaded) ? loaded : [])
+
+        setTasks(Array.isArray(loadedTasks) ? loadedTasks : [])
       } catch (error) {
         console.error('Failed to initialize app:', error)
-      } finally {
-        setIsInitializing(false)
       }
     }
 
@@ -49,6 +54,10 @@ function App() {
 
     return () => window.clearInterval(intervalId)
   }, [])
+
+  useEffect(() => {
+    window.localStorage.setItem('planit-active-screen', activeScreen)
+  }, [activeScreen])
 
   // Task management handlers
 
@@ -126,42 +135,7 @@ function App() {
     }
   }
 
-  // Loading state
-  if (isInitializing) {
-    return (
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-          minHeight: '100vh',
-          background: '#3d2c1e',
-          color: '#fafafa',
-          fontFamily: "'Nunito', sans-serif",
-        }}
-      >
-        <div
-          style={{
-            fontSize: '48px',
-            marginBottom: '20px',
-            animation: 'spin 2s linear infinite',
-          }}
-        >
-          📌
-        </div>
-        <p style={{ fontSize: '18px' }}>Loading Planit...</p>
-        <style>{`
-          @keyframes spin {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-          }
-        `}</style>
-      </div>
-    )
-  }
-
-  // Render only Kanban board
+  // Render app immediately and hydrate auth/tasks in background.
   return (
     <KanbanScreen
       tasks={tasks}
@@ -174,6 +148,8 @@ function App() {
       onSignIn={handleSignIn}
       onSignOut={handleSignOut}
       isLoggingIn={isLoggingIn}
+      activeScreen={activeScreen}
+      onChangeScreen={setActiveScreen}
     />
   )
 }

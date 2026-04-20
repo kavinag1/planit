@@ -6,6 +6,7 @@ export const env = {
   firebaseMessagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
   firebaseAppId: import.meta.env.VITE_FIREBASE_APP_ID,
   firebaseMeasurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID,
+  openAiApiKey: import.meta.env.VITE_OPENAI_API_KEY,
   geminiApiKey: import.meta.env.VITE_GEMINI_API_KEY,
   googleCalendarClientId: import.meta.env.VITE_GOOGLE_CALENDAR_CLIENT_ID,
 }

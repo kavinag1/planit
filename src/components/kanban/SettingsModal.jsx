@@ -21,7 +21,7 @@ export default function SettingsModal({ isOpen, onClose, isLoggedIn, userEmail, 
         <div className="kanban-modal__form">
           {/* ACCOUNT SECTION */}
           <div className="settings-section">
-            <h3>👤 Account</h3>
+            <h3>Account</h3>
 
             {isLoggedIn ? (
               <>
@@ -119,7 +119,7 @@ export default function SettingsModal({ isOpen, onClose, isLoggedIn, userEmail, 
           {isLoggedIn && (
             <div className="settings-section">
               <div className="danger-zone">
-                <h4>⚠️ Danger Zone</h4>
+                <h4>Danger Zone</h4>
                 <p>Clear all tasks and reset your board. This action cannot be undone.</p>
                 <button className="kanban-btn kanban-btn--danger" onClick={() => {
                   onClearAllTasks?.()

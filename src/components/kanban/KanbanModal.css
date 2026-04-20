@@ -1,58 +1,55 @@
-/* ─── MODALS ─── */
+/* Modal shell shared by task, brain dump, and settings dialogs. */
 .kanban-modal-overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.6);
+  inset: 0;
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 1000;
+  background: rgba(0, 0, 0, 0.6);
   backdrop-filter: blur(4px);
 }
 
 .kanban-modal {
-  background: rgba(45, 31, 18, 0.95);
-  border-radius: 12px;
   width: 90%;
   max-width: 600px;
   max-height: 90vh;
   overflow-y: auto;
   border: 1px solid rgba(253, 203, 110, 0.2);
+  border-radius: 12px;
+  background: rgba(45, 31, 18, 0.95);
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
 }
 
 .kanban-modal__header {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
   padding: 24px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 .kanban-modal__header h2 {
   margin: 0;
+  color: #fdcb6e;
   font-family: 'Caveat', cursive;
   font-size: 28px;
-  color: #fdcb6e;
   font-weight: 700;
 }
 
 .kanban-modal__close {
-  background: none;
-  border: none;
-  font-size: 24px;
-  color: rgba(255, 255, 255, 0.5);
-  cursor: pointer;
-  padding: 0;
-  width: 32px;
-  height: 32px;
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: none;
   border-radius: 6px;
+  background: none;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 24px;
+  cursor: pointer;
   transition: all 0.15s;
 }
 
@@ -71,11 +68,11 @@
 
 .form-group label {
   display: block;
-  font-family: 'Nunito', sans-serif;
-  font-weight: 600;
-  font-size: 13px;
-  color: rgba(255, 255, 255, 0.7);
   margin-bottom: 8px;
+  color: rgba(255, 255, 255, 0.7);
+  font-family: 'Nunito', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
@@ -84,13 +81,13 @@
 .form-group textarea,
 .form-group select {
   width: 100%;
-  background: rgba(255, 255, 255, 0.05);
+  padding: 10px 14px;
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 8px;
-  padding: 10px 14px;
+  background: rgba(255, 255, 255, 0.05);
+  color: rgba(255, 255, 255, 0.8);
   font-family: 'Nunito', sans-serif;
   font-size: 14px;
-  color: rgba(255, 255, 255, 0.8);
   transition: all 0.15s;
 }
 
@@ -102,8 +99,8 @@
 .form-group textarea:focus,
 .form-group select:focus {
   outline: none;
-  background: rgba(255, 255, 255, 0.08);
   border-color: rgba(253, 203, 110, 0.4);
+  background: rgba(255, 255, 255, 0.08);
   box-shadow: 0 0 0 3px rgba(253, 203, 110, 0.1);
 }
 
@@ -121,7 +118,6 @@
   border-top: 1px solid rgba(255, 255, 255, 0.06);
 }
 
-/* ─── SETTINGS MODAL ─── */
 .kanban-settings-modal {
   max-width: 500px;
 }
@@ -133,40 +129,40 @@
 }
 
 .settings-section:last-child {
-  border-bottom: none;
   margin-bottom: 0;
   padding-bottom: 0;
+  border-bottom: none;
 }
 
 .settings-section h3 {
   margin: 0 0 16px 0;
+  color: #fdcb6e;
   font-family: 'Caveat', cursive;
   font-size: 18px;
-  color: #fdcb6e;
   font-weight: 700;
 }
 
 .setting-item {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
   padding: 12px 0;
 }
 
 .setting-item label {
-  font-size: 14px;
-  color: rgba(255, 255, 255, 0.7);
   margin: 0;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 14px;
+  font-weight: 500;
   text-transform: none;
   letter-spacing: normal;
-  font-weight: 500;
 }
 
 .user-info {
-  background: rgba(255, 255, 255, 0.04);
-  border-radius: 8px;
-  padding: 16px;
   margin-bottom: 16px;
+  padding: 16px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.04);
 }
 
 .user-info-row {
@@ -181,16 +177,16 @@
 }
 
 .user-info-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 48px;
   height: 48px;
   border-radius: 50%;
   background: linear-gradient(135deg, #fdcb6e, #e17055);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 700;
   color: white;
   font-size: 18px;
+  font-weight: 700;
 }
 
 .user-info-text {
@@ -198,33 +194,33 @@
 }
 
 .user-info-text .name {
-  font-weight: 600;
   color: rgba(255, 255, 255, 0.9);
   font-size: 14px;
+  font-weight: 600;
 }
 
 .user-info-text .email {
-  font-size: 12px;
-  color: rgba(255, 255, 255, 0.5);
   margin-top: 2px;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 12px;
 }
 
 .info-badge {
-  font-size: 11px;
-  background: rgba(253, 203, 110, 0.2);
-  color: #fdcb6e;
   padding: 4px 8px;
   border-radius: 6px;
-  text-transform: uppercase;
+  background: rgba(253, 203, 110, 0.2);
+  color: #fdcb6e;
+  font-size: 11px;
   font-weight: 600;
+  text-transform: uppercase;
   letter-spacing: 0.5px;
 }
 
 .danger-zone {
-  background: rgba(214, 48, 49, 0.08);
+  padding: 16px;
   border: 1px solid rgba(214, 48, 49, 0.2);
   border-radius: 8px;
-  padding: 16px;
+  background: rgba(214, 48, 49, 0.08);
 }
 
 .danger-zone h4 {

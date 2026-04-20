@@ -63,7 +63,7 @@ export default function BrainDumpModal({ isOpen, onClose, onTasksGenerated }) {
         {step === 'input' ? (
           <>
             <div className="kanban-modal__header">
-              <h2>🧠 Brain Dump</h2>
+              <h2>Brain Dump</h2>
               <button className="kanban-modal__close" onClick={onClose}>
                 ✕
               </button>
@@ -114,7 +114,7 @@ export default function BrainDumpModal({ isOpen, onClose, onTasksGenerated }) {
                   Cancel
                 </button>
                 <button type="submit" className="kanban-btn kanban-btn--primary" disabled={isLoading || !braindumpText.trim()}>
-                  {isLoading ? '🔍 Analyzing...' : '✨ Parse Tasks'}
+                  {isLoading ? 'Analyzing...' : 'Parse Tasks'}
                 </button>
               </div>
             </form>
@@ -122,7 +122,7 @@ export default function BrainDumpModal({ isOpen, onClose, onTasksGenerated }) {
         ) : (
           <>
             <div className="kanban-modal__header">
-              <h2>📋 Review Parsed Tasks</h2>
+              <h2>Review Parsed Tasks</h2>
               <button className="kanban-modal__close" onClick={onClose}>
                 ✕
               </button>
@@ -172,13 +172,13 @@ export default function BrainDumpModal({ isOpen, onClose, onTasksGenerated }) {
                             borderRadius: '4px',
                           }}
                         >
-                          ⚡ {task.priority || 'medium'}
+                          {task.priority || 'medium'}
                         </span>
                         {task.deadline && (
-                          <span style={{ color: 'rgba(255,255,255,0.6)' }}>📅 {task.deadline}</span>
+                          <span style={{ color: 'rgba(255,255,255,0.6)' }}>{task.deadline}</span>
                         )}
                         {task.estimatedMinutes && (
-                          <span style={{ color: 'rgba(255,255,255,0.6)' }}>⏱️ ~{task.estimatedMinutes}m</span>
+                          <span style={{ color: 'rgba(255,255,255,0.6)' }}>~{task.estimatedMinutes}m</span>
                         )}
                       </div>
                     </div>
@@ -206,7 +206,7 @@ export default function BrainDumpModal({ isOpen, onClose, onTasksGenerated }) {
 
                     {task.subtasks && task.subtasks.length > 0 && (
                       <div style={{ color: 'rgba(255,255,255,0.7)', fontSize: '12px' }}>
-                        <div style={{ marginBottom: '6px', fontWeight: '500' }}>📌 Subtasks:</div>
+                        <div style={{ marginBottom: '6px', fontWeight: '500' }}>Subtasks:</div>
                         <div style={{ paddingLeft: '12px' }}>
                           {task.subtasks.map((subtask, sidx) => (
                             <div key={sidx} style={{ marginBottom: '4px' }}>
@@ -226,7 +226,7 @@ export default function BrainDumpModal({ isOpen, onClose, onTasksGenerated }) {
                   ← Edit Text
                 </button>
                 <button className="kanban-btn kanban-btn--primary" onClick={handleConfirm}>
-                  ✅ Create {parsedTasks?.length} Task{parsedTasks?.length !== 1 ? 's' : ''}
+                  Create {parsedTasks?.length} Task{parsedTasks?.length !== 1 ? 's' : ''}
                 </button>
               </div>
             </div>

@@ -1,10 +1,45 @@
 import { env } from '../../config/env.js'
 import { localParseBrainDump } from '../../utils/taskEngine.js'
 
+let geminiCooldownUntil = 0
+
+function sleep(ms) {
+  return new Promise((resolve) => {
+    setTimeout(resolve, ms)
+  })
+}
+
 function toJsonSafe(text) {
+  const raw = String(text || '').trim()
+
+  // Handle markdown fenced JSON outputs such as ```json ... ```.
+  const fencedMatch = raw.match(/```(?:json)?\s*([\s\S]*?)\s*```/i)
+  const candidate = fencedMatch?.[1]?.trim() || raw
+
   try {
-    return JSON.parse(text)
+    return JSON.parse(candidate)
   } catch {
+    // Try extracting the first JSON array/object in case the model adds extra text.
+    const startArray = candidate.indexOf('[')
+    const endArray = candidate.lastIndexOf(']')
+    if (startArray !== -1 && endArray > startArray) {
+      try {
+        return JSON.parse(candidate.slice(startArray, endArray + 1))
+      } catch {
+        // continue to object attempt
+      }
+    }
+
+    const startObject = candidate.indexOf('{')
+    const endObject = candidate.lastIndexOf('}')
+    if (startObject !== -1 && endObject > startObject) {
+      try {
+        return JSON.parse(candidate.slice(startObject, endObject + 1))
+      } catch {
+        // fall through
+      }
+    }
+
     return null
   }
 }
@@ -14,25 +49,75 @@ async function callGeminiAPI(prompt, maxTokens = 1200) {
     return null
   }
 
+  if (Date.now() < geminiCooldownUntil) {
+    return null
+  }
+
   try {
     const { GoogleGenAI } = await import('@google/genai')
     const ai = new GoogleGenAI({ apiKey: env.geminiApiKey })
 
-    const response = await ai.models.generateContent({
-      model: 'gemini-3-flash-preview',
-      contents: prompt,
-      generationConfig: {
-        maxOutputTokens: maxTokens,
-        temperature: 0.7,
-      },
-    })
+    // Try stable/public model names first to avoid 400 errors from unavailable preview models.
+    const modelCandidates = ['gemini-2.5-flash', 'gemini-2.0-flash', 'gemini-1.5-flash']
 
-    return response.text || null
-  } catch (error) {
-    // Silently fail - fall back to local parsing
-    if (error?.status === 429) {
-      console.warn('⚠️ API quota exceeded - local parsing active')
+    for (const model of modelCandidates) {
+      for (let attempt = 1; attempt <= 2; attempt += 1) {
+        try {
+          const response = await ai.models.generateContent({
+            model,
+            contents: prompt,
+            generationConfig: {
+              maxOutputTokens: maxTokens,
+              temperature: 0.7,
+            },
+          })
+
+          const text = typeof response.text === 'function' ? response.text() : response.text
+          if (text) return text
+          break
+        } catch (modelError) {
+          const status = modelError?.status || modelError?.response?.status
+          const message = modelError?.message || modelError?.toString?.()
+
+          if (status === 400) {
+            // Current model unavailable or request rejected, try next model.
+            break
+          }
+
+          if (status === 429) {
+            geminiCooldownUntil = Date.now() + 5 * 60 * 1000
+            console.warn('Gemini quota hit. Falling back to local parser for 5 minutes.')
+            return null
+          }
+
+          if (status === 503 && attempt < 2) {
+            await sleep(800)
+            continue
+          }
+
+          if (status === 503) {
+            // Temporary load issue. Try next model or fallback.
+            break
+          }
+
+          console.warn(`Gemini request failed (${model}): ${message}`)
+          break
+        }
+      }
     }
+
+    return null
+  } catch (error) {
+    const status = error?.status || error?.response?.status
+    const message = error?.message || error?.toString?.()
+
+    if (status === 429) {
+      geminiCooldownUntil = Date.now() + 5 * 60 * 1000
+      console.warn('Gemini quota hit. Falling back to local parser for 5 minutes.')
+      return null
+    }
+
+    console.warn(`Gemini initialization/request error: ${message}`)
     return null
   }
 }
@@ -92,7 +177,7 @@ export async function parseBrainDumpAI(text) {
   }
 
   // Fall back to local parsing
-  console.log('📋 Using local task parser...')
+  console.log('Using local task parser...')
   return localParseBrainDump(trimmed)
 }
 
@@ -197,7 +282,7 @@ ${text}`
 
     return enrichPrioritiesAndTags(mapped)
   } catch (error) {
-    console.warn('⚠️ AI parsing failed:', error?.message || error)
+    console.warn('AI parsing failed:', error?.message || error)
     return null
   }
 }

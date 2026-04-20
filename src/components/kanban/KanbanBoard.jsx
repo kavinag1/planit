@@ -6,17 +6,17 @@ export default function KanbanBoard({ tasksByStatus, onUpdateTask, onDeleteTask,
   const [isCalendarOpen, setIsCalendarOpen] = useState(false)
   const allTasks = Object.values(tasksByStatus).flat()
   const columns = [
-    { key: 'todo', label: '📝 To Do', emoji: 'todo' },
-    { key: 'in-progress', label: '✏️ In Progress', emoji: 'doing' },
-    { key: 'review', label: '👁 Review', emoji: 'review' },
-    { key: 'done', label: '✅ Done', emoji: 'done' },
+    { key: 'todo', label: 'To Do', emoji: 'todo' },
+    { key: 'in-progress', label: 'In Progress', emoji: 'doing' },
+    { key: 'review', label: 'Review', emoji: 'review' },
+    { key: 'done', label: 'Done', emoji: 'done' },
   ]
 
   return (
     <div className="kanban-board-area">
       <div className="kanban-board-meta">
         <div>
-          <div className="kanban-board-label">📌 My Bulletin Board</div>
+          <div className="kanban-board-label">My Bulletin Board</div>
           <div className="kanban-board-date">
             {new Date().toLocaleDateString('en-US', {
               weekday: 'long',

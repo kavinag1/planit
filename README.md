@@ -19,11 +19,18 @@ Simply type or paste your thoughts, ideas, and tasks without worrying about stru
 - **Smart Rescheduling**: Automatically reschedules overdue tasks while maintaining priorities
 - **Deadline Intelligence**: Alerts and prevents deadline conflicts
 
+### Productivity Dashboard
+- **Pomodoro Timer**: Focus, short break, and long break cycles with progress ring
+- **Focus Mode Overlay**: Full-screen distraction-light timer view with quick presets
+- **Goals & Habit Tracking**: Track custom goals and daily habit streaks
+- **Analytics & History**: Status/priority breakdowns and recent activity logs
+- **Ambient Sound Controls Removed**: Dashboard and Focus Mode no longer include built-in ambience audio toggles
+
 ## Tech Stack
 
 - **Frontend**: React + Vite
 - **Backend**: Firebase (Firestore, Authentication, Analytics)
-- **AI**: OpenAI API with intelligent local parsing fallback
+- **AI**: Google Gemini API with intelligent local parsing fallback
 - **Calendar**: Google Calendar integration
 - **PWA**: Vite PWA plugin with offline caching
 
@@ -42,6 +49,7 @@ VITE_FIREBASE_MESSAGING_SENDER_ID=your_firebase_messaging_sender_id
 VITE_FIREBASE_APP_ID=your_firebase_app_id
 VITE_FIREBASE_MEASUREMENT_ID=your_firebase_measurement_id
 VITE_OPENAI_API_KEY=your_openai_api_key
+VITE_GEMINI_API_KEY=your_gemini_api_key
 VITE_GOOGLE_CALENDAR_CLIENT_ID=your_google_calendar_client_id
 ```
 

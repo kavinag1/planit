@@ -99,7 +99,7 @@ export default function FullCalendar({ tasks, onClose }) {
           marginBottom: '24px',
         }}>
           <h2 style={{ color: '#fafafa', margin: 0, fontSize: '24px', fontWeight: 'bold' }}>
-            📅 {monthName}
+            {monthName}
           </h2>
           <div style={{ display: 'flex', gap: '8px' }}>
             <button

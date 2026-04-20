@@ -1,4 +1,11 @@
-export default function KanbanSidebar({ onOpenSettings, onOpenAddTask, onOpenBrainDump, isLoggedIn }) {
+export default function KanbanSidebar({
+  onOpenSettings,
+  onOpenAddTask,
+  onOpenBrainDump,
+  isLoggedIn,
+  activeScreen,
+  onChangeScreen,
+}) {
   return (
     <aside className="kanban-sidebar">
       <div className="kanban-logo">
@@ -8,17 +15,28 @@ export default function KanbanSidebar({ onOpenSettings, onOpenAddTask, onOpenBra
 
       <nav className="kanban-nav">
         <div className="kanban-nav__section-label">Board</div>
-        <div className="kanban-nav__item active">
-          <span className="kanban-nav__icon">📋</span> My Board
-        </div>
+        <button
+          className={`kanban-nav__item ${activeScreen === 'board' ? 'active' : ''}`}
+          onClick={() => onChangeScreen('board')}
+        >
+          <span className="kanban-nav__icon">B</span> My Board
+        </button>
+
+        <div className="kanban-nav__section-label">Productivity</div>
+        <button
+          className={`kanban-nav__item ${activeScreen === 'dashboard' ? 'active' : ''}`}
+          onClick={() => onChangeScreen('dashboard')}
+        >
+          <span className="kanban-nav__icon">D</span> Dashboard
+        </button>
 
         <div className="kanban-nav__section-label">Quick Actions</div>
-        <div className="kanban-nav__item" onClick={onOpenAddTask} style={{ cursor: 'pointer' }}>
-          <span className="kanban-nav__icon">✨</span> Add Task
-        </div>
-        <div className="kanban-nav__item" onClick={onOpenBrainDump} style={{ cursor: 'pointer' }}>
-          <span className="kanban-nav__icon">🧠</span> Brain Dump
-        </div>
+        <button className="kanban-nav__item kanban-nav__item--add" onClick={onOpenAddTask}>
+          <span className="kanban-nav__icon">+</span> Add Task
+        </button>
+        <button className="kanban-nav__item" onClick={onOpenBrainDump}>
+          <span className="kanban-nav__icon">T</span> Brain Dump
+        </button>
       </nav>
 
       <div className="kanban-sidebar-footer">

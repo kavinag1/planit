@@ -63,7 +63,7 @@ export default function KanbanRightPanel({ tasks, overdueTasks }) {
     <aside className="kanban-right-panel">
       {/* STATS */}
       <div>
-        <div className="kanban-panel-section-title">📊 Sprint Stats</div>
+        <div className="kanban-panel-section-title">Sprint Stats</div>
         <div className="kanban-stats-grid">
           <div className="kanban-stat-card">
             <div className="kanban-stat-number" style={{ color: '#fdcb6e' }}>
@@ -105,7 +105,6 @@ export default function KanbanRightPanel({ tasks, overdueTasks }) {
       {/* MINI CALENDAR */}
       <div>
         <div className="kanban-panel-section-title">
-          📅{' '}
           {today.toLocaleDateString('en-US', {
             month: 'long',
             year: 'numeric',
@@ -196,7 +195,7 @@ export default function KanbanRightPanel({ tasks, overdueTasks }) {
 
       {/* UPCOMING */}
       <div>
-        <div className="kanban-panel-section-title">⏰ Coming Up</div>
+        <div className="kanban-panel-section-title">Coming Up</div>
         {upcomingTasks.length > 0 ? (
           upcomingTasks.map((task, idx) => {
             const taskDate = new Date(task.deadline)
@@ -228,7 +227,7 @@ export default function KanbanRightPanel({ tasks, overdueTasks }) {
                 ></div>
                 <div>
                   <div className="kanban-upcoming-title">{task.title}</div>
-                  <div className="kanban-upcoming-date">📅 {dateLabel}</div>
+                  <div className="kanban-upcoming-date">{dateLabel}</div>
                 </div>
               </div>
             )
